@@ -1,0 +1,55 @@
+{
+    "name": "final-project",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "start": "node ./bin/www"
+    },
+    "dependencies": {
+        "cookie-parser": "~1.4.4",
+        "core-js": "^3.6.5",
+        "debug": "~2.6.9",
+        "dotenv": "^8.2.0",
+        "ejs": "~2.6.1",
+        "express": "~4.16.1",
+        "http-errors": "~1.6.3",
+        "jsonwebtoken": "^8.5.1",
+        "lint-staged": "^10.5.3",
+        "morgan": "~1.9.1",
+        "mysql": "*"
+    },
+    "devDependencies": {
+        "swagger-jsdoc": "^6.0.0-rc.3",
+        "swagger-ui-express": "^4.1.5"
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true
+        },
+        "extends": [
+            "plugin:vue/essential",
+            "eslint:recommended"
+        ],
+        "parserOptions": {
+            "parser": "babel-eslint"
+        },
+        "rules": {}
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.js": [
+            "eslint",
+            "prettier --write"
+        ]
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not dead"
+    ]
+}
