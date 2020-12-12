@@ -4,7 +4,7 @@ module.exports = function modifyUnitState(uid) {
     let result = {};
     return new Promise((resolve, reject) => {
         db.query(
-            'UPDATE unit_list SET isSend = true WHERE id = ?',
+            'UPDATE units SET isSend = true WHERE id = ?',
             uid,
             function (err, rows) {
                 if (err) {

@@ -23,11 +23,13 @@ router.post('/register', studentModifyMethod.postRegister);
 
 router.post('/login', studentModifyMethod.postLogin);
 
-router.post('/question', updateUnitStateMethod.postUnitState);
+router.post('/send-questions', updateUnitStateMethod.postUnitState);
 
-router.get('/unit/question', getDataMethod.getQuestion);
+router.get('/questions:id', getDataMethod.getQuestion);
 
-router.get('/unit', getDataMethod.getUnit);
+router.get('/units', getDataMethod.getUnit);
+
+//router.get('/students',)
 
 //router.get('/student/unit', getDataMethod.getUnit);
 

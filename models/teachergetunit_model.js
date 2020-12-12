@@ -3,7 +3,7 @@ const db = require('./connection_db');
 module.exports = function teacherGetUnit() {
     let result = {};
     return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM unit_list', function (err, rows) {
+        db.query('SELECT * FROM units', function (err, rows) {
             if (err) {
                 console.log(err);
                 result.status = '單元載入失敗';

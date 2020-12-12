@@ -5,7 +5,7 @@ module.exports = function studentGetUnit() {
     let result = {};
     return new Promise((resolve, reject) => {
         db.query(
-            'SELECT id,name FROM unit_list WHERE isSend = 1',
+            'SELECT id,name FROM  units WHERE isSend = 1',
             function (err, rows) {
                 if (err) {
                     console.log(err);

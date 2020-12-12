@@ -56,11 +56,13 @@ module.exports = class Member {
                 });
             } else if (judgeObj(rows) === false) {
                 let identity;
-                if(rows[0].role === 1){
+                if(rows[0].role_id == 1){
                     identity = 'student';
-                }else if(rows[0].role === 2){
+                }else if(rows[0].role_id == 2){
                     identity = 'teacher';
                 }
+                console.log(rows[0].role_id);
+                console.log(identity);
                 const payload = {
                     user_account: rows[0].account,
                     user_identity: identity,

@@ -2,8 +2,8 @@ const updateUnitState = require('../models/modifyunitstate_model');
 
 module.exports = class Status {
     postUnitState(req, res) {
-        const unit_state = req.body.ustate;
-        updateUnitState(unit_state).then(
+        const unit_id = req.body.uid;
+        updateUnitState(unit_id).then(
             (result) => {
                 res.json({
                     status: '發送題目成功',
