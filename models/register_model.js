@@ -59,7 +59,7 @@ module.exports = function register(memberData) {
                                                 department : memberData.department
                                             }
                                             db.query(
-                                                'INSERT INTO student SET ?',
+                                                'INSERT INTO students SET ?',
                                                 studentinfo,
                                                 function(err,rows){
                                                     if (err) {

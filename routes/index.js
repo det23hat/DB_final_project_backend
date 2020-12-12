@@ -23,14 +23,14 @@ router.post('/register', studentModifyMethod.postRegister);
 
 router.post('/login', studentModifyMethod.postLogin);
 
-router.post('/teacher/question', updateUnitStateMethod.postUnitState);
+router.post('/question', updateUnitStateMethod.postUnitState);
 
-router.get('/teacher/unit/question', getDataMethod.getQuestion);
+router.get('/unit/question', getDataMethod.getQuestion);
 
-router.get('/teacher/unit', getDataMethod.getUnit);
+router.get('/unit', getDataMethod.getUnit);
 
-router.get('/student/unit', getDataMethod.getUnit);
+//router.get('/student/unit', getDataMethod.getUnit);
 
-router.get('/student/unit/question', getDataMethod.getQuestion);
+//router.get('/student/unit/question', getDataMethod.getQuestion);
 
 module.exports = router;

@@ -41,7 +41,7 @@ app.use('/users', usersRouter);
  * /register:
  * post:
  *  summary: register to Patrack
- *  
+ *  parameters:
  * 
 */
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

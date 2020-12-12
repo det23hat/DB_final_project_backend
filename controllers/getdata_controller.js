@@ -1,5 +1,6 @@
 const studentGetUnit = require('../models/studentgetunit_model');
 const teacherGetQuestion = require('../models/teachergetquestion_model');
+const studentGetQuestion = require('../models/studentgetquestion_model')
 const teacherGetUnit = require('../models/teachergetunit_model');
 const verify = require('../models/verification.js');
 
@@ -28,6 +29,8 @@ module.exports = class Data {
                         },
                     });
                 } else {
+                    let payload = tokenResult;
+                    if (payload.user_identity == 'teacher') {
                     teacherGetQuestion(question_unit_id).then(
                         (result) => {
                             res.json({
@@ -41,6 +44,21 @@ module.exports = class Data {
                             });
                         }
                     );
+                    } else if(payload.user_identity == 'student'){
+                        studentGetQuestion().then(
+                            (result) => {
+                                res.json({
+                                    result: result,
+                                });
+                            },
+                            (err) => {
+                                // 若寫入失敗則回傳
+                                res.json({
+                                    result: err,
+                                });
+                            }
+                        );
+                    }
                 }
             });
         }
