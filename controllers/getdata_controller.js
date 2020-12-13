@@ -6,7 +6,7 @@ const verify = require('../models/verification.js');
 
 module.exports = class Data {
     getQuestion(req, res) {
-        const question_unit_id = req.query.qid;
+        const question_unit_id = req.params.id;
         const token = req.headers['token'];
         let judgeObj = function (obj) {
             if (Object.keys(obj).length == 0) {

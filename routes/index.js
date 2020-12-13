@@ -25,7 +25,7 @@ router.post('/login', studentModifyMethod.postLogin);
 
 router.post('/send-questions', updateUnitStateMethod.postUnitState);
 
-router.get('/questions:id', getDataMethod.getQuestion);
+router.get('/questions/:id', getDataMethod.getQuestion);
 
 router.get('/units', getDataMethod.getUnit);
 
