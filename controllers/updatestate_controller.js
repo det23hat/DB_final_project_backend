@@ -8,40 +8,70 @@ module.exports = class Status {
         updateUnitState(unit_id).then(
             (result) => {
                 res.json({
-                    status: '發送題目成功',
+                    status: 'success',
                     result: result,
                 });
             },
             (err) => {
                 // 若寫入失敗則回傳
                 res.json({
+                    status: 'fail',
                     result: err,
                 });
             }
         );
     }
     postStudentAnswerState(req,res){
-        const student_id = req.params.sid;
-        const unit_id = req.params.uid;
+        const qid = req.body.qid;
         const ans = req.body.ans;
         const score = req.body.score;
-        updateStudentAnswer(student_id,unit_id,ans).then(
-            (result)=>{
-                updateStudentScore(student_id,unit_id,score).then(
-                    (result) => {
-        
-                    },
-                    (err)=>{
-        
-                    }
-                )
-            },
-            (err) =>{
-                res.json({
-                    result: err,
-                });
+        const token = req.headers['token'];
+        let judgeObj = function (obj) {
+            if (Object.keys(obj).length == 0) {
+                return true;
+            } else {
+                return false;
             }
-        )
+        };
+        if (judgeObj(token) === true) {
+            res.json({
+                status: 'fail',
+                err: '請輸入token！',
+            });
+        } else if (judgeObj(token) === false) {
+            verify(token).then((tokenResult) => {
+                if (tokenResult === false) {
+                    res.json({
+                        result: {
+                            status: 'fail',
+                            err: '請重新登入。',
+                        },
+                    });
+                } else {
+                    let payload = tokenResult;
+                    const sid = payload.user_id;
+                    updateStudentScore(sid,score).then(
+                        (result)=>{
+                            updateStudentAnswer(sid,qid,ans).then(
+                                (result) => {
+                    
+                                },
+                                (err)=>{
+                    
+                                }
+                            )
+                        },
+                        (err) =>{
+                            res.json({
+                                result: err,
+                            });
+                        }
+                    )
+
+                }
+            })
+        }
+        
         
     }
 };

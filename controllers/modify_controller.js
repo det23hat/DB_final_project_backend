@@ -21,13 +21,14 @@ module.exports = class Member {
             (result) => {
                 // 若寫入成功則回傳
                 res.json({
-                    status: '註冊成功。',
+                    status: 'success',
                     result: result,
                 });
             },
             (err) => {
                 // 若寫入失敗則回傳
                 res.json({
+                    status: 'fail',
                     result: err,
                 });
             }
@@ -50,8 +51,8 @@ module.exports = class Member {
             if (judgeObj(rows) === true) {
                 res.json({
                     result: {
-                        status: '登入失敗。',
-                        err: '請輸入正確的帳號或密碼。',
+                        status: 'fail',
+                        err: '請輸入正確的帳號或密碼。'
                     },
                 });
             } else if (judgeObj(rows) === false) {
@@ -63,9 +64,11 @@ module.exports = class Member {
                 }
                 console.log(rows[0].role_id);
                 console.log(identity);
+                console.log(rows[0].user_id);
                 const payload = {
                     user_account: rows[0].account,
                     user_identity: identity,
+                    user_id:rows[0].user_id
                 };
                 const token = jwt.sign(
                     {
@@ -78,7 +81,7 @@ module.exports = class Member {
                 //res.setHeader('token', token);
                 res.json({
                     result: {
-                        status: '登入成功。',
+                        status: 'success',
                         loginMember: '歡迎 ' + rows[0].name + ' 的登入！',
                         identity: identity,
                         token: token,

@@ -11,14 +11,14 @@ module.exports = function register(memberData) {
                 // 將資料寫入資料庫
                 if (err) {
                     console.log(err);
-                    result.status = '註冊失敗。';
+                    result.status = 'fail';
                     result.err = '伺服器錯誤，請稍後在試！';
                     reject(result);
                     return;
                 }
                 // 如果有重複的account
                 if (rows.length >= 1) {
-                    result.status = '註冊失敗。';
+                    result.status = 'fail';
                     result.err = '已有重複的帳號。';
                     reject(result);
                 } else {
@@ -34,7 +34,7 @@ module.exports = function register(memberData) {
                             // 若資料庫部分出現問題，則回傳給client端「伺服器錯誤，請稍後再試！」的結果。
                             if (err) {
                                 console.log(err);
-                                result.status = '註冊失敗。';
+                                result.status = 'fail';
                                 result.err = '伺服器錯誤，請稍後在試！';
                                 reject(result);
                                 return;
@@ -46,7 +46,7 @@ module.exports = function register(memberData) {
                                     function(err, rows){
                                         if (err) {
                                             console.log(err);
-                                            result.status = '找user id失敗。';
+                                            result.status = 'fail';
                                             result.err = '伺服器錯誤，請稍後在試！';
                                             reject(result);
                                             return;
@@ -64,7 +64,7 @@ module.exports = function register(memberData) {
                                                 function(err,rows){
                                                     if (err) {
                                                         console.log(err);
-                                                        result.status = '學生加入失敗。';
+                                                        result.status = 'fail';
                                                         result.err = '伺服器錯誤，請稍後在試！';
                                                         reject(result);
                                                         return;

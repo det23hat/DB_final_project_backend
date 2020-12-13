@@ -17,6 +17,7 @@ module.exports = class Data {
         };
         if (judgeObj(token) === true) {
             res.json({
+                status: 'fail',
                 err: '請輸入token！',
             });
         } else if (judgeObj(token) === false) {
@@ -24,7 +25,7 @@ module.exports = class Data {
                 if (tokenResult === false) {
                     res.json({
                         result: {
-                            status: 'token錯誤。',
+                            status: 'fail',
                             err: '請重新登入。',
                         },
                     });
@@ -57,6 +58,7 @@ module.exports = class Data {
         };
         if (judgeObj(token) === true) {
             res.json({
+                status: 'fail',
                 err: '請輸入token！',
             });
         } else if (judgeObj(token) === false) {
@@ -64,24 +66,26 @@ module.exports = class Data {
                 if (tokenResult === false) {
                     res.json({
                         result: {
-                            status: 'token錯誤。',
+                            status: 'fail',
                             err: '請重新登入。',
                         },
                     });
                 } else {
                     let payload = tokenResult;
-                    console.log(payload);
                     console.log(`identity = ${payload.user_identity}`);
+                    console.log(`id = ${user_id}`);
                     if (payload.user_identity == 'teacher') {
                         teacherGetUnit().then(
                             (result) => {
                                 res.json({
+                                    status:'success',
                                     result: result,
                                 });
                             },
                             (err) => {
                                 // 若寫入失敗則回傳
                                 res.json({
+                                    status:'fail',
                                     result: err,
                                 });
                             }
@@ -90,12 +94,14 @@ module.exports = class Data {
                         studentGetUnit().then(
                             (result) => {
                                 res.json({
+                                    status:'success',
                                     result: result,
                                 });
                             },
                             (err) => {
                                 // 若寫入失敗則回傳
                                 res.json({
+                                    status:'fail',
                                     result: err,
                                 });
                             }
