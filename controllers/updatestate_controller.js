@@ -1,6 +1,7 @@
 const updateUnitState = require('../models/modifyunitstate_model');
 const updateStudentAnswer = require('../models/updateanswerstate_model');
 const updateStudentScore = require('../models/updatescore_model');
+const verify = require('../models/verification.js');
 
 module.exports = class Status {
     postUnitState(req, res) {
@@ -53,12 +54,20 @@ module.exports = class Status {
                     const sid = payload.user_id;
                     updateStudentScore(sid,uid,score).then(
                         (result)=>{
+                            console.log(`result:${result.status}`);
                             updateStudentAnswer(sid,qid,ans).then(
                                 (result) => {
-                    
+                                    res.json({
+                                        result:{
+                                            status:'success',
+                                            token:token
+                                        }
+                                    })
                                 },
                                 (err)=>{
-                    
+                                    res.json({
+                                        result: err,
+                                    });
                                 }
                             )
                         },

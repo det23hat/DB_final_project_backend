@@ -3,11 +3,11 @@ var router = express.Router();
 
 const StudentModifyMethod = require('../controllers/modify_controller');
 const GetDataMethod = require('../controllers/getdata_controller');
-const UpdateUnitStateMethod = require('../controllers/updatestate_controller');
+const UpdateStateMethod = require('../controllers/updatestate_controller');
 
 let studentModifyMethod = new StudentModifyMethod();
 let getDataMethod = new GetDataMethod();
-let updateUnitStateMethod = new UpdateUnitStateMethod();
+let updateStateMethod = new UpdateStateMethod();
 
 /* GET home page. 
 router.get('/', function (req, res, next) {
@@ -25,7 +25,7 @@ router.post('/register', studentModifyMethod.postRegister);
 router.post('/login', studentModifyMethod.postLogin);
 
 //老師送題目
-router.post('/send-questions', updateUnitStateMethod.postUnitState);
+router.post('/send-questions', updateStateMethod.postUnitState);
 
 //學生或老師取得題目
 router.get('/questions/:id', getDataMethod.getQuestion);
@@ -34,7 +34,7 @@ router.get('/questions/:id', getDataMethod.getQuestion);
 router.get('/units', getDataMethod.getUnit);
 
 //學生分數跟答題狀況
-router.post('/answer/unit/:uid/student/:sid',);
+router.post('/answer', updateStateMethod.postStudentAnswerState);
 
 //router.get('/students',)
 
