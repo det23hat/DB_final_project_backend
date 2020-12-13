@@ -1,4 +1,3 @@
-const { of } = require('core-js/fn/array');
 const db = require('./connection_db');
 
 module.exports = function updateAnserState(student_id,unit_id,anss){

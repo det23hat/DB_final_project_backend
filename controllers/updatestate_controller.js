@@ -1,6 +1,7 @@
 const updateUnitState = require('../models/modifyunitstate_model');
 const updateStudentAnswer = require('../models/updateanswerstate_model');
-const updateStudentScore = require('../models/updatescore_model')
+const updateStudentScore = require('../models/updatescore_model');
+
 module.exports = class Status {
     postUnitState(req, res) {
         const unit_id = req.body.uid;
