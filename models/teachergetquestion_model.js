@@ -4,7 +4,7 @@ module.exports = function teacherGetQuestion(qid) {
     let result = {};
     return new Promise((resolve, reject) => {
         db.query(
-            'SELECT question,option_a,option_b,option_c,option_d,answer,q_analyze FROM questions WHERE unit_id = ?',
+            'SELECT * FROM questions WHERE unit_id = ?',
             qid,
             function (err, rows) {
                 if (err) {
