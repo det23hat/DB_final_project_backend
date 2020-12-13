@@ -22,6 +22,7 @@ module.exports = class Status {
         );
     }
     postStudentAnswerState(req,res){
+        const uid = req.body.uid;
         const qid = req.body.qid;
         const ans = req.body.ans;
         const score = req.body.score;
@@ -50,7 +51,7 @@ module.exports = class Status {
                 } else {
                     let payload = tokenResult;
                     const sid = payload.user_id;
-                    updateStudentScore(sid,score).then(
+                    updateStudentScore(sid,uid,score).then(
                         (result)=>{
                             updateStudentAnswer(sid,qid,ans).then(
                                 (result) => {

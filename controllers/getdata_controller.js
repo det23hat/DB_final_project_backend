@@ -33,6 +33,7 @@ module.exports = class Data {
                     GetQuestion(question_unit_id).then(
                         (result) => {
                             res.json({
+                                token:token,
                                 result: result,
                             });
                         },
@@ -72,13 +73,15 @@ module.exports = class Data {
                     });
                 } else {
                     let payload = tokenResult;
+                    console.log(`${payload}`);
                     console.log(`identity = ${payload.user_identity}`);
-                    console.log(`id = ${user_id}`);
+                    console.log(`id = ${payload.user_id}`);
                     if (payload.user_identity == 'teacher') {
                         teacherGetUnit().then(
                             (result) => {
                                 res.json({
                                     status:'success',
+                                    token:token,
                                     result: result,
                                 });
                             },
@@ -95,6 +98,7 @@ module.exports = class Data {
                             (result) => {
                                 res.json({
                                     status:'success',
+                                    token:token,
                                     result: result,
                                 });
                             },

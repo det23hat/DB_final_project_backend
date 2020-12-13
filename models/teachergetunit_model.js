@@ -11,8 +11,6 @@ module.exports = function teacherGetUnit() {
                 reject(result);
                 return;
             }
-                result.unit = rows[0].id;
-                result.unitName = 
             resolve(rows);
         });
     });
