@@ -1,15 +1,15 @@
 const db = require('./connection_db');
 
-module.exports = function teacherGetQuestion(qid) {
+
+module.exports = function studentList() {
     let result = {};
     return new Promise((resolve, reject) => {
         db.query(
-            'SELECT qs.id,qs.unit_id,qs.question,qs.option_a,qs.option_b,qs.option_c,qs.option_d,qs.answer,us.name FROM questions as qs JOIN units as us on qs.unit_id = us.id WHERE unit_id = ?',
-            qid,
+            'SELECT u.account as studentID ,stu.name ,stu.department , sum(s.score)/count(distinct s.unit_id) as averageScore FROM students AS stu JOIN users AS u on u.id = stu.user_id JOIN scores AS s ON s.user_id = u.id  GROUP BY stu.id',
             function (err, rows) {
                 if (err) {
                     console.log(err);
-                    result.status = '題目載入失敗';
+                    result.status = '單元載入失敗';
                     result.err = '伺服器錯誤，請稍後在試！';
                     reject(result);
                     return;

@@ -36,6 +36,7 @@ router.get('/units', getDataMethod.getUnit);
 //學生分數跟答題狀況
 router.post('/answer', updateStateMethod.postStudentAnswerState);
 
+router.get('/studentList', getDataMethod.getStudentList);
 //router.get('/students',)
 
 //router.get('/student/unit', getDataMethod.getUnit);

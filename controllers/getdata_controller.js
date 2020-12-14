@@ -1,6 +1,6 @@
 const studentGetUnit = require('../models/studentgetunit_model');
 const GetQuestion = require('../models/teachergetquestion_model');
-//const studentGetQuestion = require('../models/studentgetquestion_model')
+const StudentList = require('../models/studentlist_model');
 const teacherGetUnit = require('../models/teachergetunit_model');
 const verify = require('../models/verification.js');
 
@@ -50,6 +50,7 @@ module.exports = class Data {
     }
     getUnit(req, res) {
         const token = req.headers['token'];
+        console.log(`token = ${token}`);
         let judgeObj = function (obj) {
             if (Object.keys(obj).length == 0) {
                 return true;
@@ -110,6 +111,58 @@ module.exports = class Data {
                                 });
                             }
                         );
+                    }
+                }
+            });
+        }
+    }
+    getStudentList(req, res){
+        const token = req.headers['token'];
+        console.log(`token = ${token}`);
+        let judgeObj = function (obj) {
+            if (Object.keys(obj).length == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+        if (judgeObj(token) === true) {
+            res.json({
+                status: 'fail',
+                err: '請輸入token！',
+            });
+        } else if (judgeObj(token) === false){
+            verify(token).then((tokenResult) =>{
+                if (tokenResult === false) {
+                    res.json({
+                        result: {
+                            status: 'fail',
+                            err: '請重新登入。',
+                        },
+                    });
+                }else{
+                    let payload = tokenResult;
+                    if (payload.user_identity == 'teacher') {
+                        StudentList().then(
+                            (result) =>{
+                                res.json({
+                                    status:'success',
+                                    token:token,
+                                    result: result,
+                                });
+                            },
+                            (err) =>{
+                                res.json({
+                                    status:'fail',
+                                    result: err,
+                                });
+                            }
+                        );
+                    }else if (payload.user_identity == 'student') {
+                        res.json({
+                            status:'fail',
+                            result: '身份是學生',
+                        });
                     }
                 }
             });
