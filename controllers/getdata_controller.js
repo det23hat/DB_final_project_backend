@@ -7,6 +7,7 @@ const verify = require('../models/verification.js');
 module.exports = class Data {
     getQuestion(req, res) {
         const question_unit_id = req.params.id;
+        
         const token = req.headers['token'];
         let judgeObj = function (obj) {
             if (Object.keys(obj).length == 0) {
@@ -31,10 +32,30 @@ module.exports = class Data {
                     });
                 } else {
                     GetQuestion(question_unit_id).then(
-                        (result) => {
+                        (results) => {
+                            let object ={};
+                            let q_object_array = [];
+                            for(let index = 0; index < results.length; index++){
+                                let q_object ={};
+                                q_object.id = results[index].id;
+                                q_object.question = results[index].question;
+                                q_object.unit_id = results[index].unit_id;
+                                q_object.option_a = results[index].option_a;
+                                q_object.option_b = results[index].option_b;
+                                q_object.option_c = results[index].option_c;
+                                q_object.option_d = results[index].option_d;
+                                q_object.answer = results[index].answer;
+
+                                q_object_array[index] = q_object;
+                            }
+                            for (let index = 0; index < q_object_array.length; index++) {
+                                console.log(q_object_array[index]);
+                            }
+                            object.name = results[0].name;
+                            object.questions = q_object_array;
                             res.json({
                                 token:token,
-                                result: result,
+                                result: object,
                             });
                         },
                         (err) => {
