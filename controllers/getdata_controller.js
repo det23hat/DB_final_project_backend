@@ -241,6 +241,7 @@ module.exports = class Data {
     }
     getStudentDetail(req, res){
         const token = req.headers['token'];
+        const sid = req.params.uid;
         let judgeObj = function (obj) {
             if (Object.keys(obj).length == 0) {
                 return true;
@@ -263,7 +264,7 @@ module.exports = class Data {
                         },
                     });
                 }else{
-                    studentDetail().then(
+                    studentDetail(sid).then(
                         (result)=>{
                             res.json({
                                 status:'success',
