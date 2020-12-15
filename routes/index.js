@@ -36,7 +36,10 @@ router.get('/units', getDataMethod.getUnit);
 //學生分數跟答題狀況
 router.post('/answer', updateStateMethod.postStudentAnswerState);
 
-router.get('/studentList', getDataMethod.getStudentList);
+//傳uid
+router.get('/student-list', getDataMethod.getStudentList);
+
+router.get('/student/detail/:uid',getDataMethod.getStudentDetail);
 //router.get('/students',)
 
 //router.get('/student/unit', getDataMethod.getUnit);
