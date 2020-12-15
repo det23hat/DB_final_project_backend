@@ -52,7 +52,8 @@ module.exports = class Data {
                                     q_object.optionD = results[index].option_d;
                                     q_object.questionAnswer = results[index].answer;
                                     q_object.analyze = results[index].q_analyze;
-
+                                    q_object.isSend = results[index].isSend;
+                                    
                                     q_object_array[index] = q_object;
                                 }
                                 for (let index = 0; index < q_object_array.length; index++) {
