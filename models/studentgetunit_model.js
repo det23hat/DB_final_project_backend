@@ -9,7 +9,7 @@ module.exports = function studentGetUnit() {
             function (err, rows) {
                 if (err) {
                     console.log(err);
-                    result.status = '單元載入失敗';
+                    result.status = 'fail';
                     result.err = '伺服器錯誤，請稍後在試！';
                     reject(result);
                     return;

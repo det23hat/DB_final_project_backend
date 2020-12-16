@@ -8,8 +8,8 @@ module.exports = function studentGetQuestion(uid,sid) {
             sid,
             function (err, rows) {
                 if (err) {
-                    console.log(err);
-                    result.status = '題目載入失敗';
+                    console.log(`err 1 :${err}`);
+                    result.status = 'fail';
                     result.err = '伺服器錯誤，請稍後在試！';
                     reject(result);
                     return;
@@ -21,8 +21,13 @@ module.exports = function studentGetQuestion(uid,sid) {
                         function (err, rows) {
                             if (err) {
                                 console.log(err);
-                                result.status = '題目載入失敗';
+                                result.status = 'fail';
                                 result.err = '伺服器錯誤，請稍後在試！';
+                                reject(result);
+                                return;
+                            }else if(rows.length === 0){
+                                result.status = 'fail';
+                                result.err = '題目為空';
                                 reject(result);
                                 return;
                             }
@@ -35,7 +40,7 @@ module.exports = function studentGetQuestion(uid,sid) {
                         function (err, rows) {
                             if (err) {
                                 console.log(err);
-                                result.status = '題目載入失敗';
+                                result.status = 'fail';
                                 result.err = '伺服器錯誤，請稍後在試！';
                                 reject(result);
                                 return;

@@ -40,6 +40,8 @@ router.post('/answer', updateStateMethod.postStudentAnswerState);
 router.get('/student-list', getDataMethod.getStudentList);
 
 router.get('/student/detail/:uid',getDataMethod.getStudentDetail);
+
+router.get('/question-overview',getDataMethod.getQuestionOverview);
 //router.get('/students',)
 
 //router.get('/student/unit', getDataMethod.getUnit);

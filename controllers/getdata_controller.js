@@ -5,6 +5,7 @@ const teacherGetUnit = require('../models/teachergetunit_model');
 const verify = require('../models/verification.js');
 const studentDetail = require('../models/studentDetail_model');
 const studentGetQuestion = require('../models/studentgetquestion_model');
+
 module.exports = class Data {
     getQuestion(req, res) {
         const question_unit_id = req.params.id;
@@ -75,35 +76,46 @@ module.exports = class Data {
                             }
                         );
                     }else if(payload.user_identity == 'student'){
+                        console.log(`unit : ${question_unit_id}`);
                         const sid = payload.user_id;
+                        let object ={};
                         studentGetQuestion(question_unit_id,sid).then(
                             (results) =>{
-                                let object ={};
-                                let q_object_array = [];
-                                for(let index = 0; index < results.length; index++){
-                                    let q_object ={};
-                                    q_object.id = results[index].id;
-                                    q_object.question = results[index].question;
-                                    //q_object.unit_id = results[index].unit_id;
-                                    q_object.optionA = results[index].option_a;
-                                    q_object.optionB = results[index].option_b;
-                                    q_object.optionC = results[index].option_c;
-                                    q_object.optionD = results[index].option_d;
-                                    q_object.questionAnswer = results[index].q_answer;
-                                    if(typeof(results[index].s_answer) == "undefined"){
-                                        q_object.studentAnswer = "";
-                                    }else{
-                                        q_object.studentAnswer = results[index].s_answer;
+                                if(results.status == 'fail'){
+                                    object.status ='fail'
+                                    object.err = '????'
+                                }else if(results.status == 'success'){
+                                    let object ={};
+                                    let q_object_array = [];
+                                    for(let index = 0; index < results.length; index++){
+                                        let q_object ={};
+                                        q_object.id = results[index].id;
+                                        q_object.question = results[index].question;
+                                        //q_object.unit_id = results[index].unit_id;
+                                        q_object.optionA = results[index].option_a;
+                                        q_object.optionB = results[index].option_b;
+                                        q_object.optionC = results[index].option_c;
+                                        q_object.optionD = results[index].option_d;
+                                        q_object.questionAnswer = results[index].q_answer;
+                                        if(typeof(results[index].s_answer) == "undefined"){
+                                            q_object.studentAnswer = "";
+                                        }else{
+                                            q_object.studentAnswer = results[index].s_answer;
+                                        }
+                                        q_object.analyze = results[index].q_analyze;
+    
+                                        q_object_array[index] = q_object;
                                     }
-                                    q_object.analyze = results[index].q_analyze;
-
-                                    q_object_array[index] = q_object;
+                                    for (let index = 0; index < q_object_array.length; index++) {
+                                        console.log(q_object_array[index]);
+                                    }
+                                    object.name = results[0].name;
+                                    object.questions = q_object_array;
+                                }else{
+                                    object.status ='fail'
+                                    object.err ='unit name error'
                                 }
-                                for (let index = 0; index < q_object_array.length; index++) {
-                                    console.log(q_object_array[index]);
-                                }
-                                object.name = results[0].name;
-                                object.questions = q_object_array;
+                        
                                 res.json({
                                     token:token,
                                     result: object,
@@ -267,6 +279,49 @@ module.exports = class Data {
                     });
                 }else{
                     studentDetail(sid).then(
+                        (result)=>{
+                            res.json({
+                                status:'success',
+                                token:token,
+                                result: result,
+                            });
+                        },
+                        (err) =>{
+                            res.json({
+                                status:'fail',
+                                result: err,
+                            });
+                        }
+                    )
+                }
+            })
+        }
+    }
+    getQuestionOverview(req, res){
+        const token = req.headers['token'];
+        let judgeObj = function (obj) {
+            if (Object.keys(obj).length == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+        if (judgeObj(token) === true) {
+            res.json({
+                status: 'fail',
+                err: '請輸入token！',
+            });
+        } else if (judgeObj(token) === false){
+            verify(token).then((tokenResult)=>{
+                if (tokenResult === false) {
+                    res.json({
+                        result: {
+                            status: 'fail',
+                            err: '請重新登入。',
+                        },
+                    });
+                }else{
+                    (sid).then(
                         (result)=>{
                             res.json({
                                 status:'success',
