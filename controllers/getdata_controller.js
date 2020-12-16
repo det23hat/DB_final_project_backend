@@ -81,13 +81,10 @@ module.exports = class Data {
                         let object ={};
                         studentGetQuestion(question_unit_id,sid).then(
                             (results) =>{
-                                
                                 if(results[0].status == 'fail'){
                                     object.status ='fail'
                                     object.err = results.err
-                                    console.log('1');
                                 }else{
-                                    console.log('2');
                                     let q_object_array = [];
                                     for(let index = 0; index < results.length; index++){
                                         let q_object ={};

@@ -16,7 +16,7 @@ module.exports = function studentGetQuestion(uid,sid) {
                 }
                 else if (rows.length === 0){
                     db.query(
-                        'SELECT qs.id,qs.unit_id,qs.question,qs.option_a,qs.option_b,qs.option_c,qs.option_d,qs.answer as q_answer,us.name FROM questions as qs JOIN units as us on qs.unit_id = us.id WHERE unit_id = ?',
+                        'SELECT qs.id,qs.unit_id,qs.question,qs.option_a,qs.option_b,qs.option_c,qs.option_d,qs.answer as q_answer,us.name,q_analyze FROM questions as qs JOIN units as us on qs.unit_id = us.id WHERE unit_id = ?',
                         uid,
                         function (err, rows) {
                             if (err) {
