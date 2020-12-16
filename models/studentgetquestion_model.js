@@ -31,9 +31,12 @@ module.exports = function studentGetQuestion(uid,sid) {
                                 reject(result);
                                 return;
                             }
+                            rows[0].status = 'success';
                             resolve(rows);
                     })
                 }else if(rows.length >= 1){
+                    console.log(rows.length);
+                    console.log(rows);
                     db.query(
                         'select question_id as id ,answer_statuses.answer as s_answer,question,option_a,option_b,option_c,option_d,questions.answer as q_answer,q_analyze,name FROM answer_statuses join questions on answer_statuses.question_id =  questions.id JOIN units as us on questions.unit_id = us.id WHERE user_id = ? and unit_id = ?',
                         [sid,uid],
@@ -44,7 +47,13 @@ module.exports = function studentGetQuestion(uid,sid) {
                                 result.err = '伺服器錯誤，請稍後在試！';
                                 reject(result);
                                 return;
+                            }else if(rows.length === 0){
+                                result.status = 'fail';
+                                result.err = '題目為空';
+                                reject(result);
+                                return;
                             }
+                            rows[0].status = 'success';
                             resolve(rows);
                             }
                         )
