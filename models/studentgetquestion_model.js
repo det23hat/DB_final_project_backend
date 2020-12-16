@@ -4,8 +4,8 @@ module.exports = function studentGetQuestion(uid,sid) {
     let result = {};
     return new Promise((resolve, reject) => {
         db.query(
-            'SELECT answer FROM answer_statuses WHERE answer_statuses.user_id = ?',
-            sid,
+            'SELECT answer_statuses.answer FROM answer_statuses join questions on answer_statuses.question_id = questions.id  WHERE answer_statuses.user_id = ? and unit_id =?',
+            [sid,uid],
             function (err, rows) {
                 if (err) {
                     console.log(`err 1 :${err}`);
@@ -27,7 +27,7 @@ module.exports = function studentGetQuestion(uid,sid) {
                                 return;
                             }else if(rows.length === 0){
                                 result.status = 'fail';
-                                result.err = '題目為空';
+                                result.err = '0題目為空';
                                 reject(result);
                                 return;
                             }
@@ -49,7 +49,7 @@ module.exports = function studentGetQuestion(uid,sid) {
                                 return;
                             }else if(rows.length === 0){
                                 result.status = 'fail';
-                                result.err = '題目為空';
+                                result.err = '1題目為空';
                                 reject(result);
                                 return;
                             }
