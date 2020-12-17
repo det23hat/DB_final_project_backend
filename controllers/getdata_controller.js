@@ -6,7 +6,8 @@ const verify = require('../models/verification.js');
 const studentDetail = require('../models/studentDetail_model');
 const studentGetQuestion = require('../models/studentgetquestion_model');
 const questionOverview = require('../models/questionOverview_model');
-const questionResult =require('../models/questionResult_model');
+const questionResult = require('../models/questionResult_model');
+const allStudentScores = require('../models/allStudentScores_model'); 
 
 module.exports = class Data {
     getQuestion(req, res) {
@@ -419,4 +420,50 @@ module.exports = class Data {
             })
         }
     }
+    
+    getAllStudentScores(req, res){
+        const token = req.headers['token'];
+        const uid = req.params.unitId;
+        let judgeObj = function (obj) {
+            if (Object.keys(obj).length == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+        if (judgeObj(token) === true) {
+            res.json({
+                status: 'fail',
+                err: '請輸入token！',
+            });
+        } else if (judgeObj(token) === false){
+            verify(token).then((tokenResult)=>{
+                if (tokenResult === false) {
+                    res.json({
+                        result: {
+                            status: 'fail',
+                            err: '請重新登入。',
+                        },
+                    });
+                }else{
+                    allStudentScores(uid).then(
+                        (result)=>{
+                            res.json({
+                                status:'success',
+                                token:token,
+                                result: result,
+                            });
+                        },
+                        (err) =>{
+                            res.json({
+                                status:'fail',
+                                result: err,
+                            });
+                        }
+                    )
+                }
+            })
+        }
+        }
+    
 };

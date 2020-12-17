@@ -46,6 +46,8 @@ router.get('/question-overview',getDataMethod.getQuestionOverview);
 //傳uid
 router.get('/question-result/:id',getDataMethod.getQuestionResult);
 
+router.get('/all-students-scores/:unitId',getDataMethod.getAllStudentScores);
+
 //router.get('/students',)
 
 //router.get('/student/unit', getDataMethod.getUnit);
