@@ -42,6 +42,10 @@ router.get('/student-list', getDataMethod.getStudentList);
 router.get('/student/detail/:uid',getDataMethod.getStudentDetail);
 
 router.get('/question-overview',getDataMethod.getQuestionOverview);
+
+//傳uid
+router.get('/question-result/:id',getDataMethod.getQuestionResult);
+
 //router.get('/students',)
 
 //router.get('/student/unit', getDataMethod.getUnit);

@@ -5,6 +5,8 @@ const teacherGetUnit = require('../models/teachergetunit_model');
 const verify = require('../models/verification.js');
 const studentDetail = require('../models/studentDetail_model');
 const studentGetQuestion = require('../models/studentgetquestion_model');
+const questionOverview = require('../models/questionOverview_model');
+const questionResult =require('../models/questionResult_model');
 
 module.exports = class Data {
     getQuestion(req, res) {
@@ -317,12 +319,93 @@ module.exports = class Data {
                         },
                     });
                 }else{
-                    (sid).then(
+                    questionOverview().then(
                         (result)=>{
                             res.json({
                                 status:'success',
                                 token:token,
                                 result: result,
+                            });
+                        },
+                        (err) =>{
+                            res.json({
+                                status:'fail',
+                                result: err,
+                            });
+                        }
+                    )
+                }
+            })
+        }
+    }
+    getQuestionResult(req, res){
+        const token = req.headers['token'];
+        const uid = req.params.id;
+        let judgeObj = function (obj) {
+            if (Object.keys(obj).length == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+        if (judgeObj(token) === true) {
+            res.json({
+                status: 'fail',
+                err: '請輸入token！',
+            });
+        }else if (judgeObj(token) === false){
+            verify(token).then((tokenResult)=>{
+                if (tokenResult === false) {
+                    res.json({
+                        result: {
+                            status: 'fail',
+                            err: '請重新登入。',
+                        },
+                    });
+                }else{
+                    questionResult(uid).then(
+                        (result)=>{
+                            let rows = result.rows;
+                            let row_question = result.questions;
+                            let object ={unitTitle :rows[0].unitTitle};
+                            let questions = [];
+                            
+                            
+                            
+                            console.log(`total length :${result.total.length}`);
+
+                            for(let i = 0 ; i <result.total.length ; i++){
+                                let questionObject ={};
+                                
+                                questionObject.question = row_question[i].question;
+                                questionObject.option_a = row_question[i].option_a;
+                                questionObject.option_b = row_question[i].option_b;
+                                questionObject.option_c = row_question[i].option_c;
+                                questionObject.option_d = row_question[i].option_d;
+                                questionObject.answer = row_question[i].answer;
+                                let s_index = 0;
+                                let studentAnswer = [];
+                                for (let index = 0; index < rows.length; index++) {
+                                    if(result.total[i] == rows[index].id){
+                                        let AnswerObject = {};
+                                        AnswerObject.name = rows[index].name;
+                                        AnswerObject.studentOption = rows[index].studentOption;
+                                        studentAnswer[s_index]=AnswerObject;
+                                        s_index ++;
+                                    }
+                                }
+                                console.log(studentAnswer);
+                                questionObject.studentAnswers = studentAnswer;
+                                //console.log(questionObject)
+
+                                questions[i]=questionObject;
+                                //console.log(questions[i]);
+                            }
+                            object.questions = questions;
+                            res.json({
+                                status:'success',
+                                token:token,
+                                result: object,
                             });
                         },
                         (err) =>{
