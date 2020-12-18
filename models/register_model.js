@@ -12,14 +12,14 @@ module.exports = function register(memberData) {
                 if (err) {
                     console.log(err);
                     result.status = 'fail';
-                    result.err = '伺服器錯誤，請稍後在試！';
+                    result.err = '伺服器錯誤';
                     reject(result);
                     return;
                 }
                 // 如果有重複的account
                 if (rows.length >= 1) {
                     result.status = 'fail';
-                    result.err = '已有重複的帳號。';
+                    result.err = '已有重複的帳號';
                     reject(result);
                 } else {
                     let userinfo = {
@@ -35,7 +35,7 @@ module.exports = function register(memberData) {
                             if (err) {
                                 console.log(err);
                                 result.status = 'fail';
-                                result.err = '伺服器錯誤，請稍後在試！';
+                                result.err = '伺服器錯誤';
                                 reject(result);
                                 return;
                             }else{
@@ -47,7 +47,7 @@ module.exports = function register(memberData) {
                                         if (err) {
                                             console.log(err);
                                             result.status = 'fail';
-                                            result.err = '伺服器錯誤，請稍後在試！';
+                                            result.err = '伺服器錯誤';
                                             reject(result);
                                             return;
                                         }else{
@@ -65,7 +65,7 @@ module.exports = function register(memberData) {
                                                     if (err) {
                                                         console.log(err);
                                                         result.status = 'fail';
-                                                        result.err = '伺服器錯誤，請稍後在試！';
+                                                        result.err = '伺服器錯誤';
                                                         reject(result);
                                                         return;
                                                     }else{

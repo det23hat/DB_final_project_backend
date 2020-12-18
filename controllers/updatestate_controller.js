@@ -38,7 +38,7 @@ module.exports = class Status {
         if (judgeObj(token) === true) {
             res.json({
                 status: 'fail',
-                err: '請輸入token！',
+                err: '請輸入token',
             });
         } else if (judgeObj(token) === false) {
             verify(token).then((tokenResult) => {
@@ -46,7 +46,7 @@ module.exports = class Status {
                     res.json({
                         result: {
                             status: 'fail',
-                            err: '請重新登入。',
+                            err: '請重新登入',
                         },
                     });
                 } else {

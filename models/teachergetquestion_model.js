@@ -9,8 +9,8 @@ module.exports = function teacherGetQuestion(qid) {
             function (err, rows) {
                 if (err) {
                     console.log(err);
-                    result.status = '題目載入失敗';
-                    result.err = '伺服器錯誤，請稍後在試！';
+                    result.status = 'fail';
+                    result.err = '伺服器錯誤';
                     reject(result);
                     return;
                 }

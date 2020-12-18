@@ -10,7 +10,7 @@ module.exports = function memberLogin(memberData) {
             function (err, rows) {
                 if (err) {
                     result.status = 'fail';
-                    result.err = '伺服器錯誤，請稍後在試！';
+                    result.err = '伺服器錯誤';
                     reject(result);
                     return;
                 }else{
@@ -33,7 +33,7 @@ module.exports = function memberLogin(memberData) {
                                     console.log(rows);
                                     if (err) {
                                         result.status = 'fail';
-                                        result.err = '伺服器錯誤，請稍後在試！';
+                                        result.err = '伺服器錯誤';
                                         reject(result);
                                         return;
                                     }else{
@@ -48,7 +48,7 @@ module.exports = function memberLogin(memberData) {
                                     console.log(rows);
                                     if (err) {
                                         result.status = 'fail';
-                                        result.err = '伺服器錯誤，請稍後在試！';
+                                        result.err = '伺服器錯誤';
                                         reject(result);
                                         return;
                                     }else{

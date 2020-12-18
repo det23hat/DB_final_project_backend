@@ -10,7 +10,7 @@ module.exports = function studentGetQuestion(uid,sid) {
                 if (err) {
                     console.log(`err 1 :${err}`);
                     result.status = 'fail';
-                    result.err = '伺服器錯誤，請稍後在試！';
+                    result.err = '伺服器錯誤';
                     reject(result);
                     return;
                 }
@@ -22,7 +22,7 @@ module.exports = function studentGetQuestion(uid,sid) {
                             if (err) {
                                 console.log(err);
                                 result.status = 'fail';
-                                result.err = '伺服器錯誤，請稍後在試！';
+                                result.err = '伺服器錯誤';
                                 reject(result);
                                 return;
                             }else if(rows.length === 0){
@@ -44,7 +44,7 @@ module.exports = function studentGetQuestion(uid,sid) {
                             if (err) {
                                 console.log(err);
                                 result.status = 'fail';
-                                result.err = '伺服器錯誤，請稍後在試！';
+                                result.err = '伺服器錯誤';
                                 reject(result);
                                 return;
                             }else if(rows.length === 0){

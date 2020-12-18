@@ -52,7 +52,7 @@ module.exports = class Member {
                 res.json({
                     result: {
                         status: 'fail',
-                        err: '請輸入正確的帳號或密碼。'
+                        err: '帳號或密碼錯誤'
                     },
                 });
             } else if (judgeObj(rows) === false) {
