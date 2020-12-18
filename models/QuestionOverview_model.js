@@ -5,7 +5,7 @@ module.exports = function questionOverview() {
     let result = {};
     return new Promise((resolve, reject) => {
 
-        db.query('SELECT u.id as unitId, u.name, avg(s.score) as unitAvg FROM units AS u JOIN scores AS s ON s.unit_id = u.id GROUP BY u.id having unitAvg >80 ORDER BY u.id',
+        db.query('SELECT u.id , u.name, avg(s.score) as unitAvg FROM units AS u JOIN scores AS s ON s.unit_id = u.id GROUP BY u.id having unitAvg >80 ORDER BY u.id',
         function(err,easyRows){
             if (err) {
                 console.log(err);

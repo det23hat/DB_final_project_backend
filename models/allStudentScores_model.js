@@ -11,7 +11,7 @@ module.exports = function allStudentScores(uid) {
                 if (err) {
                     console.log(err);
                     result.status = 'fail';
-                    result.err = '伺服器錯誤，請稍後在試！';
+                    result.err = '伺服器錯誤';
                     reject(result);
                     return;
                 }
