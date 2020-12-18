@@ -3,7 +3,7 @@ const db = require('./connection_db');
 module.exports = function modifyUnitState(uid) {
     let result = {};
     return new Promise((resolve, reject) => {
-        db.query('UPDATE units SET isSend = true WHERE id = ?',uid,
+        db.query('UPDATE units SET isSend = true WHERE id = ?',uid,
             function (err, rows) {
                 if (err) {
                     console.log(err);
