@@ -5,7 +5,7 @@ const verify = require('../models/verification.js');
 
 module.exports = class Status {
     postUnitState(req, res) {
-        const unit_id = req.body.uid;
+        let unit_id = req.body.uid;
         updateUnitState(unit_id).then(
             (result) => {
                 res.json({
