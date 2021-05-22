@@ -17,7 +17,8 @@
         "jsonwebtoken": "^8.5.1",
         "lint-staged": "^10.5.3",
         "morgan": "~1.9.1",
-        "mysql": "*"
+        "mysql": "*",
+        "prom-client": "^13.1.0"
     },
     "devDependencies": {
         "swagger-jsdoc": "^6.0.0-rc.3",

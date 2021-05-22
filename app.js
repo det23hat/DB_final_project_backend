@@ -8,22 +8,9 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
-//const swaggerDocument = require('./swagger.json');
-const swaggerOptions ={
-  swaggerDefinition: {
-    info: {
-      title: 'Patrack API',
-      description: 'Generate Patrack API document with swagger'
-    }
-    //servers :["http://localhost:3000"]
-  },
-  apis:['./routes/index.js']
-}
 var app = express();
 
-const swaggerDocument = swaggerJsdoc(swaggerOptions);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -36,7 +23,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
@@ -48,7 +34,6 @@ app.use('/users', usersRouter);
  *  
  * 
 */
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

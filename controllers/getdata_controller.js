@@ -7,13 +7,26 @@ const studentDetail = require('../models/studentDetail_model');
 const studentGetQuestion = require('../models/studentgetquestion_model');
 const questionOverview = require('../models/questionOverview_model');
 const questionResult = require('../models/questionResult_model');
-const allStudentScores = require('../models/allStudentScores_model'); 
+const allStudentScores = require('../models/allStudentScores_model');
+
+//Counter
+const client = require('prom-client');
+const collectDefaultMetrics = client.collectDefaultMetrics;
+collectDefaultMetrics({timeout:5000});
+
+const counter = new client.Counter({
+  name: 'node_request_operation_total',
+  help: 'the total number of processd request',
+});
 
 module.exports = class Data {
     getQuestion(req, res) {
         const question_unit_id = req.params.id;
         
         const token = req.headers['token'];
+
+        counter.inc();
+
         let judgeObj = function (obj) {
             if (Object.keys(obj).length == 0) {
                 return true;
@@ -136,6 +149,9 @@ module.exports = class Data {
     getUnit(req, res) {
         const token = req.headers['token'];
         console.log(`token = ${token}`);
+
+        counter.inc();
+
         let judgeObj = function (obj) {
             if (Object.keys(obj).length == 0) {
                 return true;
@@ -203,6 +219,9 @@ module.exports = class Data {
     }
     getStudentList(req, res){
         const token = req.headers['token'];
+
+        counter.inc();
+
         let judgeObj = function (obj) {
             if (Object.keys(obj).length == 0) {
                 return true;
@@ -255,6 +274,9 @@ module.exports = class Data {
     getStudentDetail(req, res){
         const token = req.headers['token'];
         const sid = req.params.uid;
+
+        counter.inc();
+
         let judgeObj = function (obj) {
             if (Object.keys(obj).length == 0) {
                 return true;
@@ -298,6 +320,9 @@ module.exports = class Data {
     }
     getQuestionOverview(req, res){
         const token = req.headers['token'];
+
+        counter.inc();
+
         let judgeObj = function (obj) {
             if (Object.keys(obj).length == 0) {
                 return true;
@@ -342,6 +367,9 @@ module.exports = class Data {
     getQuestionResult(req, res){
         const token = req.headers['token'];
         const uid = req.params.id;
+
+        counter.inc();
+
         let judgeObj = function (obj) {
             if (Object.keys(obj).length == 0) {
                 return true;
@@ -424,6 +452,9 @@ module.exports = class Data {
     getAllStudentScores(req, res){
         const token = req.headers['token'];
         const uid = req.params.unitId;
+        
+        counter.inc();
+
         let judgeObj = function (obj) {
             if (Object.keys(obj).length == 0) {
                 return true;

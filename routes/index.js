@@ -9,6 +9,7 @@ let studentModifyMethod = new StudentModifyMethod();
 let getDataMethod = new GetDataMethod();
 let updateStateMethod = new UpdateStateMethod();
 
+
 /* GET home page. 
 router.get('/', function (req, res, next) {
     //console.log(req.body.test);
@@ -20,33 +21,33 @@ router.post('/', function (req, res, next) {
 });
 */
 
-router.post('/register', studentModifyMethod.postRegister);
+router.post('/api/register', studentModifyMethod.postRegister);
 
-router.post('/login', studentModifyMethod.postLogin);
+router.post('/api/login', studentModifyMethod.postLogin);
 
 //老師送題目
-router.post('/send-questions', updateStateMethod.postUnitState);
+router.post('/api/send-questions', updateStateMethod.postUnitState);
 
 //學生或老師取得題目
-router.get('/questions/:id', getDataMethod.getQuestion);
+router.get('/api/questions/:id', getDataMethod.getQuestion);
 
 //學生或老師取得題目
-router.get('/units', getDataMethod.getUnit);
+router.get('/api/units', getDataMethod.getUnit);
 
 //學生分數跟答題狀況
-router.post('/answer', updateStateMethod.postStudentAnswerState);
+router.post('/api/answer', updateStateMethod.postStudentAnswerState);
 
 //傳uid
-router.get('/student-list', getDataMethod.getStudentList);
+router.get('/api/student-list', getDataMethod.getStudentList);
 
-router.get('/student/detail/:uid',getDataMethod.getStudentDetail);
+router.get('/api/student/detail/:uid',getDataMethod.getStudentDetail);
 
-router.get('/question-overview',getDataMethod.getQuestionOverview);
+router.get('/api/question-overview',getDataMethod.getQuestionOverview);
 
 //傳uid
-router.get('/question-result/:id',getDataMethod.getQuestionResult);
+router.get('/api/question-result/:id',getDataMethod.getQuestionResult);
 
-router.get('/all-students-scores/:unitId',getDataMethod.getAllStudentScores);
+router.get('/api/all-students-scores/:unitId',getDataMethod.getAllStudentScores);
 
 //router.get('/students',)
 
