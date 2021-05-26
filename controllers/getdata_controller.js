@@ -19,11 +19,20 @@ const counter = new client.Counter({
   help: 'the total number of processd request',
 });
 
+const histogram = new client.Histogram({
+    name: 'http_request_duration_seconds',
+    help: 'Duration of HTTP requests in microseconds',
+    labelNames: ['method', 'statusCode'],
+    buckets: [0.1, 0.5, 1, 3, 5, 7, 10],
+  });
+
 module.exports = class Data {
     getQuestion(req, res) {
         const question_unit_id = req.params.id;
         
         const token = req.headers['token'];
+
+        const end = histogram.startTimer({ method: 'GET' });
 
         counter.inc();
 
@@ -39,6 +48,7 @@ module.exports = class Data {
                 status: 'fail',
                 err: '請輸入token',
             });
+            end({ statusCode: '500' });
         } else if (judgeObj(token) === false) {
             verify(token).then((tokenResult) => {
                 if (tokenResult === false) {
@@ -48,6 +58,7 @@ module.exports = class Data {
                             err: '請重新登入',
                         },
                     });
+                    end({ statusCode: '500' });
                 } else {
                     const payload = tokenResult;
                     console.log(`${payload}`);
@@ -83,12 +94,14 @@ module.exports = class Data {
                                     token:token,
                                     result: object,
                                 });
+                                end({ statusCode: '200' });
                             },
                             (err) => {
                                 // 若寫入失敗則回傳
                                 res.json({
                                     result: err,
                                 });
+                                end({ statusCode: '500' });
                             }
                         );
                     }else if(payload.user_identity == 'student'){
@@ -132,12 +145,14 @@ module.exports = class Data {
                                     token:token,
                                     result: object,
                                 });
+                                end({ statusCode: '200' });
                             },
                             (err) => {
                                 // 若寫入失敗則回傳
                                 res.json({
                                     result: err,
                                 });
+                                end({ statusCode: '500' });
                             }
                         );
                     }
@@ -150,6 +165,7 @@ module.exports = class Data {
         const token = req.headers['token'];
         console.log(`token = ${token}`);
 
+        const end = histogram.startTimer({ method: 'GET' });
         counter.inc();
 
         let judgeObj = function (obj) {
@@ -164,6 +180,7 @@ module.exports = class Data {
                 status: 'fail',
                 err: '請輸入token',
             });
+            end({ statusCode: '500' });
         } else if (judgeObj(token) === false) {
             verify(token).then((tokenResult) => {
                 if (tokenResult === false) {
@@ -173,6 +190,7 @@ module.exports = class Data {
                             err: '請重新登入',
                         },
                     });
+                    end({ statusCode: '500' });
                 } else {
                     let payload = tokenResult;
                     console.log(`${payload}`);
@@ -186,6 +204,7 @@ module.exports = class Data {
                                     token:token,
                                     result: result,
                                 });
+                                end({ statusCode: '500' });
                             },
                             (err) => {
                                 // 若寫入失敗則回傳
@@ -193,6 +212,7 @@ module.exports = class Data {
                                     status:'fail',
                                     result: err,
                                 });
+                                end({ statusCode: '500' });
                             }
                         );
                     } else if (payload.user_identity == 'student') {
@@ -203,6 +223,7 @@ module.exports = class Data {
                                     token:token,
                                     result: result,
                                 });
+                                end({ statusCode: '200' });
                             },
                             (err) => {
                                 // 若寫入失敗則回傳
@@ -210,6 +231,7 @@ module.exports = class Data {
                                     status:'fail',
                                     result: err,
                                 });
+                                end({ statusCode: '500' });
                             }
                         );
                     }
@@ -321,6 +343,8 @@ module.exports = class Data {
     getQuestionOverview(req, res){
         const token = req.headers['token'];
 
+        const end = histogram.startTimer({ method: 'GET' });
+
         counter.inc();
 
         let judgeObj = function (obj) {
@@ -344,6 +368,7 @@ module.exports = class Data {
                             err: '請重新登入',
                         },
                     });
+                    end({ statusCode: '500' });
                 }else{
                     questionOverview().then(
                         (result)=>{
@@ -352,12 +377,14 @@ module.exports = class Data {
                                 token:token,
                                 result: result,
                             });
+                            end({ statusCode: '200' });
                         },
                         (err) =>{
                             res.json({
                                 status:'fail',
                                 result: err,
                             });
+                            end({ statusCode: '500' });
                         }
                     )
                 }
@@ -368,6 +395,8 @@ module.exports = class Data {
         const token = req.headers['token'];
         const uid = req.params.id;
 
+        const end = histogram.startTimer({ method: 'GET' });
+        
         counter.inc();
 
         let judgeObj = function (obj) {
@@ -382,6 +411,7 @@ module.exports = class Data {
                 status: 'fail',
                 err: '請輸入token',
             });
+            end({ statusCode: '500' });
         }else if (judgeObj(token) === false){
             verify(token).then((tokenResult)=>{
                 if (tokenResult === false) {
@@ -391,6 +421,7 @@ module.exports = class Data {
                             err: '請重新登入',
                         },
                     });
+                    end({ statusCode: '500' });
                 }else{
                     questionResult(uid).then(
                         (result)=>{
@@ -436,12 +467,14 @@ module.exports = class Data {
                                 token:token,
                                 result: object,
                             });
+                            end({ statusCode: '200' });
                         },
                         (err) =>{
                             res.json({
                                 status:'fail',
                                 result: err,
                             });
+                            end({ statusCode: '500' });
                         }
                     )
                 }

@@ -8,6 +8,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+const client = require('prom-client');
+
 var app = express();
 
 
@@ -25,6 +27,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.get('/metrics', async (req, res) => {
+  res.set('Content-Type', client.register.contentType);
+  res.send(await client.register.metrics());
+});
 
 /** 
  * @swagger
