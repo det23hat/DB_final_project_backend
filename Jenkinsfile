@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment{
-        SERVER_CREDENTIALS = credentialsId('dockerhub-registry')
+        SERVER_CREDENTIALS = credentials('dockerhub-registry')
     }
     stages {
         stage('Build docker image') {
