@@ -4,17 +4,19 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
+                sh """
+                    sudo docker build -t testweb .
+                """
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
+                echo 'test Testing..'
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+                echo 'test Deploying....'
             }
         }
     }
