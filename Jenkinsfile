@@ -8,13 +8,10 @@ pipeline {
             steps {
                 script { 
 					try{
-						// use local registry
-                        docker.withRegistry("https://hub.docker.com/",SERVER_CREDENTIALS ){
-                            customImage = docker.build("109753135/testweb:latest")
-						    customImage.push('latest')
-                        }
 
-						currentBuild.result = 'SUCCESS'
+                       customImage = docker.build("109753135/testweb:latest")
+					   currentBuild.result = 'SUCCESS'
+
 					}
 					catch(err){
 						currentBuild.result = 'FAILURE'
@@ -23,14 +20,13 @@ pipeline {
 				}
             }
         }
-        stage('Test') {
-            steps {
-                echo 'test Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'test Deploying....'
+        stage('Deploy Image') {
+            steps{
+                script {
+                docker.withRegistry( '', SERVER_CREDENTIALS ) {
+                    customImage.push('latest')
+                    }
+                }
             }
         }
     }
