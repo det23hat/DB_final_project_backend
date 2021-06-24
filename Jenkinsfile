@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { dockerfile true }
     environment{
         SERVER_CREDENTIALS = credentials('dockerhub-registry')
     }
@@ -8,12 +8,10 @@ pipeline {
             steps {
                 script { 
 					try{
-						
 						// use local registry
-						docker.withRegistry("https://hub.docker.com",SERVER_CREDENTIALS) {
-							 customImage = docker.build("109753135/testweb:latest")
-							 customImage.push('latest')
-						}  
+						customImage = docker.build("109753135/testweb:latest")
+						customImage.push('latest')
+                        
 						currentBuild.result = 'SUCCESS'
 					}
 					catch(err){
