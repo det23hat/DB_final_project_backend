@@ -9,9 +9,11 @@ pipeline {
                 script { 
 					try{
 						// use local registry
-						customImage = docker.build("109753135/testweb:latest")
-						customImage.push('latest')
-                        
+                        docker.withRegistry("https://hub.docker.com/",SERVER_CREDENTIALS ){
+                            customImage = docker.build("109753135/testweb:latest")
+						    customImage.push('latest')
+                        }
+
 						currentBuild.result = 'SUCCESS'
 					}
 					catch(err){
