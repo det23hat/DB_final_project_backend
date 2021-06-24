@@ -1,5 +1,5 @@
 pipeline {
-    agent { dockerfile true }
+    agent any
     environment{
         SERVER_CREDENTIALS = credentials('dockerhub-registry')
     }
